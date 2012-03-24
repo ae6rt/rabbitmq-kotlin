@@ -1,0 +1,105 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.petrovic</groupId>
+    <artifactId>rabbitmq-kotlin</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <name>rabbitmq-kotlin</name>
+    <url>http://maven.apache.org</url>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <kotlin-maven-plugin.version>0.2.3.8-beta-10</kotlin-maven-plugin.version>
+    </properties>
+
+    <build>
+        <sourceDirectory>src/main/kotlin</sourceDirectory>
+        <testSourceDirectory>src/test/kotlin</testSourceDirectory>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>com.goldin.plugins</groupId>
+                    <artifactId>kotlin-maven-plugin</artifactId>
+                    <version>${kotlin-maven-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <id>compile-kotlin-sources</id>
+                            <goals>
+                                <goal>compile</goal>
+                                <goal>testCompile</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>com.goldin.plugins</groupId>
+                    <artifactId>ivy-maven-plugin</artifactId>
+                    <version>${kotlin-maven-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <id>add-ivy-dependencies</id>
+                            <goals>
+                                <goal>ivy</goal>
+                            </goals>
+                            <phase>initialize</phase>
+                            <configuration>
+                                <ivyconf>${project.basedir}/src/main/resources/ivyconf.xml</ivyconf>
+                                <dependencies>
+                                    <dependency>
+                                        <groupId>ivy.org</groupId>
+                                        <artifactId>bt343</artifactId>
+                                        <version>latest.lastSuccessful</version>
+                                        <classifier>core/intellij-core</classifier>
+                                    </dependency>
+                                    <dependency>
+                                        <groupId>ivy.org</groupId>
+                                        <artifactId>bt344</artifactId>
+                                        <version>latest.lastSuccessful</version>
+                                        <classifier>kotlin-runtime</classifier>
+                                    </dependency>
+                                </dependencies>
+                                <scope>compile</scope>
+                                <verbose>true</verbose>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>com.goldin.plugins</groupId>
+                <artifactId>kotlin-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>com.goldin.plugins</groupId>
+                <artifactId>ivy-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.rabbitmq</groupId>
+            <artifactId>amqp-client</artifactId>
+            <version>2.7.1</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.10</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>kotlin plugin repo</id>
+            <url>http://evgeny-goldin.org/artifactory/repo/</url>
+        </pluginRepository>
+    </pluginRepositories>
+
+</project>
